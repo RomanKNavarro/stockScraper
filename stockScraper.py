@@ -16,10 +16,10 @@ import math
 
 from colorist import red, ColorRGB
 
-# yahoo finance stock url: https://finance.yahoo.com/quote/ATVIX?.tsrc=fin-srch
-# https://finance.yahoo.com/quote/STOCKSYMBOLHERE?.tsrc=fin-srch
-
 red = ColorRGB(200, 0, 0)
+
+# for sbux, getting error:
+# ValueError: math domain error --RESOLVED
 
 while True:
     print("\nINPUT TICKER SYMBOL (OR 'help' FOR HELP)")
@@ -66,11 +66,15 @@ while True:
             pbrNum = priceNum / bvpsNum
             # print(f'PBR: {pbrNum:.2f}')
 
+            # GRAHAM NUMBER
             epsNum = float(str(eps[1: -1]))
-            grahamNum = str(round(math.sqrt(22.5 * epsNum * bvpsNum), 2))
-            #print(f'GRAHAM #: {grahamNum:.2f}')
+    
+            try:
+                grahamNum = str(round(math.sqrt(22.5 * epsNum * bvpsNum), 2))
+            except ValueError:
+                grahamNum = "N/A (either eps or bvps is negative)"
 
-            stats = {"PRICE": price, "EPS": eps, "PE": pe, "ROE": roe, "BVPS": bvps, "GRAHAM #": grahamNum}
+            stats = {"PRICE": price, "EPS": eps, "PE": pe, "ROE": roe, "PBR": str(round(pbrNum, 2)), "BVPS": bvps, "GRAHAM #": grahamNum}
 
             for name, num in stats.items():
                 print(name.ljust(20) + num.rjust(20))
@@ -89,4 +93,7 @@ while True:
      stock's considered undervaluied.
     
 {red}PBR:{red.OFF} value of 1 means that stock's trading in-line w/ BV. Below signals
-     a potentially undervalued stock. Above means it's trading @ a premium to the BV.""")
+     a potentially undervalued stock. Above means it's trading @ a premium to BV.
+     
+{red}GRAHAM #:{red.OFF} named after the father of value investing, this is used as metric
+     to determine highest price investor should pay for stock. Lower than price = attractive""")
