@@ -1,3 +1,5 @@
+#!/opt/homebrew/bin/python3
+
 ''' stockScraper.py: given a ticker, analyze the respective Stock's following info:
     - Company Name
     - EPS
@@ -19,8 +21,6 @@ from colorist import red, ColorRGB
 
 red = ColorRGB(200, 0, 0)
 
-print(f"kill the {red}vip{red.OFF}")
-
 while True:
     print("\nINPUT TICKER SYMBOL (OR 'help' FOR HELP)")
     ticker = input().lower()
@@ -39,10 +39,11 @@ while True:
             print(name.get_text())
 
             # PRICE
-            price = mainSoup.find('div', class_='text-4xl font-bold inline-block').get_text()
-
-            # IT SOMETIMES ALTERNATES TO THIS:
-            # price = mainSoup.find('div', class_='text-4xl font-bold block sm:inline').get_text()
+            try:
+                price = mainSoup.find('div', class_='text-4xl font-bold inline-block').get_text()
+            except AttributeError: 
+                # IT SOMETIMES ALTERNATES TO THIS:
+                price = mainSoup.find('div', class_='text-4xl font-bold block sm:inline').get_text()
 
             # for everything else
             stats = mainSoup.find_all('td', class_='px-[5px] py-1.5 text-right font-semibold xs:px-2.5 xs:py-2')
@@ -82,10 +83,10 @@ while True:
     and greater than 20 is expensive
     
 {red}ROE:{red.OFF} the higher the ROE, the better a company is at converting it's
-    equity financing into profits
+     equity financing into profits
     
 {red}BVPS:{red.OFF} If company's BVPS is higher than it's current stock price, then the
-    stock's considered undervaluied.
+     stock's considered undervaluied.
     
-{red}PBR:{red.OFF} value of 1 means thst stock's trading in-line w/ BV. Below signals
-    a potentially undervalued stock. Above means it's trading @ a premium to the BV.""")
+{red}PBR:{red.OFF} value of 1 means that stock's trading in-line w/ BV. Below signals
+     a potentially undervalued stock. Above means it's trading @ a premium to the BV.""")
