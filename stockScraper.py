@@ -83,7 +83,7 @@ while True:
             print('404: Access Denied!')
     else:
         print(f"""
-{red}PE:{red.OFF} below 10 is considered low, between 20 & 20 is moderate, 
+{red}PE:{red.OFF} below 10 is considered low, between 10 & 20 is moderate, 
     and greater than 20 is expensive
     
 {red}ROE:{red.OFF} the higher the ROE, the better a company is at converting it's
@@ -96,4 +96,4 @@ while True:
      a potentially undervalued stock. Above means it's trading @ a premium to BV.
      
 {red}GRAHAM #:{red.OFF} named after the father of value investing, this is used as metric
-     to determine highest price investor should pay for stock. Lower than price = attractive""")
+          to determine highest price investor should pay for stock. Lower than price = attractive""")
